@@ -12,6 +12,7 @@ class Validators {
 
   static var phone = (String? value) {
     value = value ?? '';
+
     if (value.length != 10) {
       return 'Номер должен состоять из 10 цифр (без +7)';
     }
