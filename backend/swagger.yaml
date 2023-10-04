@@ -1,0 +1,323 @@
+openapi: 3.0.3
+info:
+  title: API
+  description: Проект по информационной безопасности
+  version: 1.0.0
+
+security:
+  - BearerAuth:
+    - checkSms
+    - setPassword
+    - signIn
+    - crudNotes
+
+paths:
+  /sendSms:
+    post:
+      tags:
+      - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  description: Номер телефона
+                  type: string
+      summary: Отправить код для входа на указанный номер
+      responses:
+        '201':
+            $ref: '#/components/responses/Token'
+        '400':
+            $ref: '#/components/responses/BadRequestError'
+
+  /checkSms:
+    post:
+      tags:
+      - Auth
+      summary: Проверить код из SMS для входа
+      security:
+        - BearerAuth: [checkSms]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  description: Код из SMS
+                  type: string
+      responses:
+        '201':
+            $ref: '#/components/responses/Token'
+        '400':
+            $ref: '#/components/responses/BadRequestError'
+        '401':
+            $ref: '#/components/responses/UnauthorizedError'
+        '403':
+            $ref: '#/components/responses/AccessRestrictedError'
+
+  /setPassword:
+    post:
+      tags:
+      - Auth
+      summary: Установить пароль для входа
+      security:
+        - BearerAuth: [setPassword]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  description: Пароль
+                  type: string
+      responses:
+        '201':
+            $ref: '#/components/responses/Token'
+        '400':
+            $ref: '#/components/responses/BadRequestError'
+        '401':
+            $ref: '#/components/responses/UnauthorizedError'
+        '403':
+            $ref: '#/components/responses/AccessRestrictedError'
+
+  /signIn:
+    post:
+      tags:
+      - Auth
+      summary: Войти, используя пароль
+      security:
+        - BearerAuth: [signIn]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  description: Пароль
+                  type: string
+      responses:
+        '201':
+            $ref: '#/components/responses/Token'
+        '400':
+            $ref: '#/components/responses/BadRequestError'
+        '401':
+            $ref: '#/components/responses/UnauthorizedError'
+        '403':
+            $ref: '#/components/responses/AccessRestrictedError'
+
+  /notes:
+    get:
+      tags:
+      - Notes
+      summary: Получить записки пользователя
+      security:
+        - BearerAuth: [crudNotes]
+      responses:
+        '200':
+          description: Список записок
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+                xml:
+                  name: Results
+        '400':
+            $ref: '#/components/responses/BadRequestError'
+        '401':
+            $ref: '#/components/responses/UnauthorizedError'
+        '403':
+            $ref: '#/components/responses/AccessRestrictedError'
+
+    post:
+      tags:
+      - Notes
+      summary: Создать записку
+      security:
+        - BearerAuth: [crudNotes]
+      requestBody:
+        $ref: '#/components/requestBodies/Note'
+      responses:
+        '201':
+          description: Записка создана успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '400':
+            $ref: '#/components/responses/BadRequestError'
+        '401':
+            $ref: '#/components/responses/UnauthorizedError'
+        '403':
+            $ref: '#/components/responses/AccessRestrictedError'
+
+  /notes/{id}:
+    put:
+      tags:
+      - Notes
+      summary: Изменить записку
+      security:
+        - BearerAuth: [crudNotes]
+      parameters:
+        - $ref: '#/components/parameters/NoteId'
+      requestBody:
+        $ref: '#/components/requestBodies/Note'
+      responses:
+        '201':
+          description: Записка изменена успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '400':
+            $ref: '#/components/responses/BadRequestError'
+        '401':
+            $ref: '#/components/responses/UnauthorizedError'
+        '403':
+            $ref: '#/components/responses/AccessRestrictedError'
+
+    delete:
+      tags:
+      - Notes
+      summary: Удалить записку
+      security:
+        - BearerAuth: [crudNotes]
+      parameters:
+        - $ref: '#/components/parameters/NoteId'
+      responses:
+        '204':
+          description: Записка удалена успешно
+        '400':
+            $ref: '#/components/responses/BadRequestError'
+        '401':
+            $ref: '#/components/responses/UnauthorizedError'
+        '403':
+            $ref: '#/components/responses/AccessRestrictedError'
+
+
+components:
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+  parameters:
+    NoteId:
+      required: true
+      in: path
+      name: id
+      schema:
+        type: integer
+        description: id записки
+
+  requestBodies:
+    Note:
+      description: Содержимое записки
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              text:
+                type: string
+
+    Token:
+      description: JWT-токен
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+
+  responses:
+    Token:
+      description: Токен
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+
+    Note:
+      description: Записка
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Note'
+
+    BadRequestError:
+      description: Некорректный запрос
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                default: Запрос составлен некорректно
+                type: string
+
+    UnauthorizedError:
+      description: Вы не авторизованы
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                default: Необходима авторизация для выполнения этой операции
+                type: string
+
+    AccessRestrictedError:
+      description: Недостаточно прав
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                default: У вас недостаточно прав для выполнения этой операции
+                type: string
+
+    GeneralError:
+      description: Ошибка
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                default: Что-то пошло не так
+                type: string
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+
+    Note:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        text:
+          type: string
