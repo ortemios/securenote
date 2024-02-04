@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:secure_note/data/note_repository.dart';
 import 'package:secure_note/view/home/notes/note_edit_page.dart';
@@ -12,6 +14,25 @@ class NoteListPage extends StatefulWidget {
 }
 
 class _NoteListPageState extends State<NoteListPage> {
+  final _selectedIds = <int>{};
+  late StreamSubscription _noteListSub;
+
+  @override
+  void initState() {
+    _noteListSub = NoteRepository.inst.getNoteList().listen((event) {
+      setState(() {
+        _selectedIds.clear();
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _noteListSub.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +70,28 @@ class _NoteListPageState extends State<NoteListPage> {
   Widget _list(List<NoteItem> items) {
     return Column(
       children: [
+        if (_selectedIds.isNotEmpty)
+          SizedBox(
+            height: 50,
+            child: Row(
+              children: [
+                MaterialButton(
+                  onPressed: () {
+                    NoteRepository.inst.deleteNotes(ids: _selectedIds.toList());
+                  },
+                  child: const Text("Удалить"),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      _selectedIds.clear();
+                    });
+                  },
+                  child: const Text("Отмена"),
+                ),
+              ],
+            ),
+          ),
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
@@ -60,26 +103,51 @@ class _NoteListPageState extends State<NoteListPage> {
     );
   }
 
-  Widget _noteItem(NoteItem item) => SizedBox(
-        height: 50,
-        child: GestureDetector(
-          onTap: () {
+  Widget _noteItem(NoteItem item) {
+    final isSelected = _selectedIds.contains(item.id);
+    return SizedBox(
+      height: 50,
+      child: InkWell(
+        onTap: () {
+          if (_selectedIds.isNotEmpty) {
+            setState(() {
+              if (isSelected) {
+                _selectedIds.remove(item.id);
+              } else {
+                _selectedIds.add(item.id);
+              }
+            });
+          } else {
             Navigator.of(context).push(NoteEditPage.route(noteId: item.id));
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    item.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+          }
+        },
+        onLongPress: () {
+          setState(() {
+            _selectedIds.add(item.id);
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  item.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ],
-            ),
+              ),
+              if (_selectedIds.isNotEmpty)
+                Container(
+                  color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+                  padding: const EdgeInsets.all(8.0),
+                  width: 10,
+                  height: 10,
+                ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 }

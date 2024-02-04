@@ -29,6 +29,9 @@ class _NoteEditPageState extends State<NoteEditPage> {
   @override
   void initState() {
     super.initState();
+    _titleController.addListener(_onChange);
+    _contentController.addListener(_onChange);
+
     final noteId = widget.noteId;
     this.noteId = noteId;
     if (noteId != null) {
@@ -47,10 +50,17 @@ class _NoteEditPageState extends State<NoteEditPage> {
     }
   }
 
+  void _onChange() {
+    setState(() {
+      _isModified = true;
+    });
+  }
+
   void _save() {
     if (_isSaving) return;
     setState(() {
       _isSaving = true;
+      _isModified = false;
     });
     final title = _titleController.text;
     final content = _contentController.text;
@@ -76,7 +86,7 @@ class _NoteEditPageState extends State<NoteEditPage> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(0.0),
             child: Row(
               children: [
                 Expanded(child: TextField(controller: _titleController)),
@@ -96,26 +106,18 @@ class _NoteEditPageState extends State<NoteEditPage> {
   }
 
   Widget get _actionIcon {
-    if (_isModified) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: SizedBox(
-          width: 20,
-          height: 20,
-          child: _isSaving
-              ? const CircularProgressIndicator()
-              : Container(
-                  color: Colors.red,
-                  child: IconButton(
-                    iconSize: 20,
-                    icon: const Icon(Icons.save),
-                    onPressed: _save,
-                  ),
+    const size = 20.0;
+    return _isSaving
+        ? const SizedBox(width: size, height: size, child: Center(child: CircularProgressIndicator()))
+        : _isModified
+            ? IconButton(
+                iconSize: size,
+                icon: const Icon(
+                  Icons.save,
+                  size: size,
                 ),
-        ),
-      );
-    } else {
-      return Container();
-    }
+                onPressed: _save,
+              )
+            : Container();
   }
 }

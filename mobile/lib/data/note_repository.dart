@@ -23,6 +23,8 @@ abstract class NoteRepository {
     required String content,
   });
 
+  Future<void> deleteNotes({required List<int> ids});
+
   Future<int> createNote({
     required String title,
     required String content,
@@ -85,6 +87,16 @@ class LocalNoteRepository extends NoteRepository {
     };
     await _writeNotes(notes);
     reloadNoteList();
+  }
+
+  @override
+  Future<void> deleteNotes({required List<int> ids}) async {
+    _notes.add(_notes.value.where((e) => !ids.contains(e.id)).toList());
+    var notes = await _readNotes();
+    for (final id in ids) {
+      notes.remove(id.toString());
+    }
+    await _writeNotes(notes);
   }
 
   @override
