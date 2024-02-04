@@ -202,7 +202,6 @@ paths:
 
 
 components:
-
   securitySchemes:
     BearerAuth:
       type: http
@@ -231,7 +230,7 @@ components:
                 type: string
 
     Token:
-      description: JWT-токен
+      description: Токен API
       content:
         application/json:
           schema:
@@ -303,15 +302,6 @@ components:
                 type: string
 
   schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-          minLength: 1
-
     Note:
       type: object
       properties:
