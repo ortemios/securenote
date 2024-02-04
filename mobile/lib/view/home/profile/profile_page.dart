@@ -10,12 +10,8 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      //crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text(
-          "Вы в системе",
-          textAlign: TextAlign.center,
-        ),
         MaterialButton(
           onPressed: () => AuthRepository.inst.logout().then(
                 (value) => Navigator.pushAndRemoveUntil(

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:secure_note/data/note_repository.dart';
 import 'package:secure_note/view/home/notes/note_edit_page.dart';
 
@@ -122,9 +123,12 @@ class _NoteListPageState extends State<NoteListPage> {
           }
         },
         onLongPress: () {
-          setState(() {
-            _selectedIds.add(item.id);
-          });
+          if (_selectedIds.isEmpty) {
+            setState(() {
+              _selectedIds.add(item.id);
+              HapticFeedback.lightImpact();
+            });
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -138,12 +142,20 @@ class _NoteListPageState extends State<NoteListPage> {
                 ),
               ),
               if (_selectedIds.isNotEmpty)
-                Container(
-                  color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                  width: 10,
-                  height: 10,
+                  child: Icon(
+                    isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+                    size: 20,
+                  ),
                 ),
+              // Container(
+              //   color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+              //   padding: const EdgeInsets.all(8.0),
+              //   width: 10,
+              //   height: 10,
+              //   child: Icon(Icons.check_box),
+              // ),
             ],
           ),
         ),

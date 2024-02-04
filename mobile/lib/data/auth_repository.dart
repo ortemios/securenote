@@ -87,19 +87,20 @@ class LocalAuthRepository extends AuthRepository {
     await setFingerprintAuth();
     if (await getAuthMethod() != AuthMethod.fingerprint) throw AuthError("Установлен другой метод авторизации");
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_authStateKey, AuthState.authorized.index);
-    //
-    //
-    // final auth = LocalAuthentication();
-    // try {
-    //   assert(
-    //     await auth.authenticate(localizedReason: "Приложите палец к сканеру", options: const AuthenticationOptions(useErrorDialogs: true)),
-    //   );
-    //   final prefs = await SharedPreferences.getInstance();
-    //   await prefs.setInt(_authStateKey, AuthState.authorized.index);
-    // } catch (e) {
-    //   throw "Авторизация не удалась.";
-    // }
+
+    //await prefs.setInt(_authStateKey, AuthState.authorized.index);
+
+
+    final auth = LocalAuthentication();
+    try {
+      assert(
+        await auth.authenticate(localizedReason: "Приложите палец к сканеру", options: const AuthenticationOptions(useErrorDialogs: true)),
+      );
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_authStateKey, AuthState.authorized.index);
+    } catch (e) {
+      throw "Авторизация не удалась.";
+    }
   }
 
   @override

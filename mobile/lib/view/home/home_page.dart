@@ -42,9 +42,11 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: PageView(
-                controller: _pageController,
-                children: _subtrees,
+              child: SafeArea(
+                child: PageView(
+                  controller: _pageController,
+                  children: _subtrees,
+                ),
               ),
             ),
             TabBar(

@@ -122,14 +122,14 @@ class LocalNoteRepository extends NoteRepository {
 
   Future<Map<String, dynamic>> _readNotes() async {
     final prefs = await SharedPreferences.getInstance();
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 300));
     final json = prefs.getString(_notesKey) ?? "{}";
     return jsonDecode(json);
   }
 
   Future<void> _writeNotes(Map<String, dynamic> notes) async {
     final prefs = await SharedPreferences.getInstance();
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 300));
     final json = jsonEncode(notes);
     await prefs.setString(_notesKey, json);
   }
