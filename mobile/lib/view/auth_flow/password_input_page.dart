@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:secure_note/data/auth_repository.dart';
 import 'package:secure_note/util/validators.dart';
-import 'package:secure_note/view/home_page.dart';
-import 'package:secure_note/view/password_repeat_page.dart';
+import 'package:secure_note/view/home/home_page.dart';
+import 'package:secure_note/view/auth_flow/password_repeat_page.dart';
 
-import '../util/messages.dart';
+import '../../util/messages.dart';
 
 class PasswordInputPage extends StatefulWidget {
   const PasswordInputPage({super.key});
@@ -54,7 +54,7 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
                     AuthRepository.inst
                         .signInWithPassword(password)
                         .then(
-                          (value) => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage())),
+                          (value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage())),
                         )
                         .catchError((e) => Messages.showError(context, e));
                   } else {

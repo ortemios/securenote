@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:secure_note/data/auth_repository.dart';
-import 'package:secure_note/view/auth_method_page.dart';
-import 'package:secure_note/view/fingerprint_input_page.dart';
-import 'package:secure_note/view/password_input_page.dart';
-import '../util/messages.dart';
+import 'package:secure_note/view/auth_flow/auth_method_page.dart';
+import 'package:secure_note/view/auth_flow/fingerprint_input_page.dart';
+import 'package:secure_note/view/auth_flow/password_input_page.dart';
+import '../../util/messages.dart';
 
 class PinInputPage extends StatefulWidget {
   final String phone;

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:secure_note/data/auth_repository.dart';
 import 'package:secure_note/util/messages.dart';
 import 'package:secure_note/util/validators.dart';
-import 'package:secure_note/view/pin_input_page.dart';
+import 'package:secure_note/view/auth_flow/pin_input_page.dart';
 
 class PhoneInputPage extends StatefulWidget {
   const PhoneInputPage({super.key});

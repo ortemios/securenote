@@ -1,23 +1,28 @@
+import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:secure_note/model/errors.dart';
 import 'package:secure_note/util/string_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 enum AuthState { unauthorized, phoneValidated, authorized }
-enum AuthMethod { none, fingerprint, password }
 
+enum AuthMethod { none, fingerprint, password }
 
 abstract class AuthRepository {
   Future<AuthState> getAuthState();
+
   Future<AuthMethod> getAuthMethod();
 
   Future<void> sendSms(String phone);
+
   Future<void> checkSms(String pin);
 
   Future<void> setFingerprintAuth();
+
   Future<void> setPasswordAuth(String password);
 
   Future<void> signInWithPassword(String password);
+
   Future<void> signInWithFingerprint();
 
   Future<void> logout();
@@ -26,21 +31,14 @@ abstract class AuthRepository {
 }
 
 class LocalAuthRepository extends AuthRepository {
-
   final _authMethodKey = "auth_method";
   final _authStateKey = "auth_state";
   final _passwordKey = "password";
   final _tokenKey = "token";
 
-  var _shouldClearCache = false;
-
   @override
   getAuthState() async {
     final prefs = await SharedPreferences.getInstance();
-    if (_shouldClearCache) {
-      _shouldClearCache = false;
-      await prefs.clear();
-    }
     final index = prefs.getInt(_authStateKey) ?? AuthState.unauthorized.index;
     return AuthState.values[index];
   }
@@ -86,9 +84,22 @@ class LocalAuthRepository extends AuthRepository {
 
   @override
   signInWithFingerprint() async {
+    await setFingerprintAuth();
     if (await getAuthMethod() != AuthMethod.fingerprint) throw AuthError("Установлен другой метод авторизации");
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_authStateKey, AuthState.authorized.index);
+    //
+    //
+    // final auth = LocalAuthentication();
+    // try {
+    //   assert(
+    //     await auth.authenticate(localizedReason: "Приложите палец к сканеру", options: const AuthenticationOptions(useErrorDialogs: true)),
+    //   );
+    //   final prefs = await SharedPreferences.getInstance();
+    //   await prefs.setInt(_authStateKey, AuthState.authorized.index);
+    // } catch (e) {
+    //   throw "Авторизация не удалась.";
+    // }
   }
 
   @override
@@ -104,6 +115,9 @@ class LocalAuthRepository extends AuthRepository {
   @override
   logout() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setInt(_authStateKey, AuthState.unauthorized.index);
+    await prefs.remove(_authStateKey);
+    await prefs.remove(_authMethodKey);
+    await prefs.remove(_passwordKey);
+    await prefs.remove(_tokenKey);
   }
 }

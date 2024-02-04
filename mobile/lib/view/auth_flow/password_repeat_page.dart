@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:secure_note/data/auth_repository.dart';
-import 'package:secure_note/view/home_page.dart';
-import 'package:secure_note/view/phone_input_page.dart';
+import 'package:secure_note/view/home/home_page.dart';
 
-import '../util/messages.dart';
-import '../util/validators.dart';
+import '../../util/messages.dart';
+import '../../util/validators.dart';
 
 class PasswordRepeatPage extends StatefulWidget {
   final String password;
@@ -47,7 +46,7 @@ class _PasswordRepeatPageState extends State<PasswordRepeatPage> {
                   AuthRepository.inst.setPasswordAuth(widget.password).then((value) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                     );
                   }).catchError((e) => Messages.showError(context, e));
                 }

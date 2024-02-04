@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:secure_note/data/auth_repository.dart';
-import 'package:secure_note/view/password_repeat_page.dart';
-import 'package:secure_note/view/phone_input_page.dart';
+import 'package:secure_note/view/auth_flow/password_repeat_page.dart';
+import 'package:secure_note/view/auth_flow/phone_input_page.dart';
 
-import '../util/messages.dart';
-import 'home_page.dart';
+import '../../util/messages.dart';
+import '../home/home_page.dart';
 
 class FingerprintInputPage extends StatefulWidget {
   const FingerprintInputPage({super.key});
@@ -14,16 +14,16 @@ class FingerprintInputPage extends StatefulWidget {
 }
 
 class _FingerprintInputPageState extends State<FingerprintInputPage> {
-  var logged = false;
+  //var logged = false;
 
   @override
   void initState() {
     super.initState();
-    AuthRepository.inst.getAuthMethod().then((method) {
-      setState(() {
-        logged = method == AuthMethod.fingerprint;
-      });
-    });
+    // AuthRepository.inst.getAuthMethod().then((method) {
+    //   setState(() {
+    //     logged = method == AuthMethod.fingerprint;
+    //   });
+    // });
   }
 
   @override
@@ -39,22 +39,22 @@ class _FingerprintInputPageState extends State<FingerprintInputPage> {
           ),
           MaterialButton(
             onPressed: () {
-              if (logged) {
+              //if (logged) {
+              //AuthRepository.inst.setFingerprintAuth().then((value) => ).
                 AuthRepository.inst
                     .signInWithFingerprint()
                     .then(
                       (value) => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomePage(),
+                          builder: (context) => HomePage(),
                         ),
                       ),
                     )
-                    .catchError((e) => _toPhoneInput()
-                        .then((value) => Messages.showError(context, e)));
-              } else {
-                _toPhoneInput();
-              }
+                    .catchError((e) => Messages.showError(context, e));
+              // } else {
+              //   _toPhoneInput();
+              // }
             },
             child: Text("*приложить*"),
           ),
@@ -63,15 +63,15 @@ class _FingerprintInputPageState extends State<FingerprintInputPage> {
     );
   }
 
-  Future<void> _toPhoneInput() {
-    return AuthRepository.inst
-        .setFingerprintAuth()
-        .then(
-          (value) => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          ),
-        )
-        .catchError((e) => Messages.showError(context, e));
-  }
+  // Future<void> _toPhoneInput() {
+  //   return AuthRepository.inst
+  //       .setFingerprintAuth()
+  //       .then(
+  //         (value) => Navigator.push(
+  //           context,
+  //           MaterialPageRoute(builder: (context) => const HomePage()),
+  //         ),
+  //       )
+  //       .catchError((e) => Messages.showError(context, e));
+  // }
 }

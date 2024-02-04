@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:secure_note/data/auth_repository.dart';
-import 'package:secure_note/view/auth_method_page.dart';
-import 'package:secure_note/view/fingerprint_input_page.dart';
-import 'package:secure_note/view/home_page.dart';
-import 'package:secure_note/view/password_input_page.dart';
-import 'package:secure_note/view/phone_input_page.dart';
+import 'package:secure_note/view/auth_flow/auth_method_page.dart';
+import 'package:secure_note/view/auth_flow/fingerprint_input_page.dart';
+import 'package:secure_note/view/auth_flow/password_input_page.dart';
+import 'package:secure_note/view/home/home_page.dart';
+import 'package:secure_note/view/auth_flow/phone_input_page.dart';
 import 'package:secure_note/view/poster.dart';
 
 void main() {
@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
             AuthMethod.password => const PasswordInputPage(),
             AuthMethod.fingerprint => const FingerprintInputPage(),
           },
-        AuthState.authorized => const HomePage(),
+        AuthState.authorized => HomePage(),
       };
       final context = _navigatorKey.currentContext;
       if (context != null) {

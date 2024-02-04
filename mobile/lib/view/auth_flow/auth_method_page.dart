@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:secure_note/view/fingerprint_input_page.dart';
-import 'package:secure_note/view/password_input_page.dart';
+import 'package:secure_note/view/auth_flow/fingerprint_input_page.dart';
+import 'package:secure_note/view/auth_flow/password_input_page.dart';
 
 class AuthMethodPage extends StatelessWidget {
   const AuthMethodPage({super.key});
