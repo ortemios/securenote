@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:secure_note/data/auth_repository.dart';
 import 'package:secure_note/view/auth_flow/auth_method_page.dart';
 import 'package:secure_note/view/auth_flow/fingerprint_input_page.dart';
 import 'package:secure_note/view/auth_flow/password_input_page.dart';
-import 'package:secure_note/view/home/home_page.dart';
 import 'package:secure_note/view/auth_flow/phone_input_page.dart';
 import 'package:secure_note/view/poster.dart';
 
@@ -27,15 +25,15 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     AuthRepository.inst.getAuthState().then((state) async {
-      final page = switch (state) {
+      return switch (state) {
         AuthState.unauthorized => const PhoneInputPage(),
-        AuthState.phoneValidated => switch (await AuthRepository.inst.getAuthMethod()) {
+        _ => switch (await AuthRepository.inst.getAuthMethod()) {
             AuthMethod.none => const AuthMethodPage(),
             AuthMethod.password => const PasswordInputPage(),
             AuthMethod.fingerprint => const FingerprintInputPage(),
-          },
-        AuthState.authorized => HomePage(),
+          }
       };
+    }).then((page) {
       final context = _navigatorKey.currentContext;
       if (context != null) {
         Navigator.pushAndRemoveUntil(

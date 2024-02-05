@@ -54,7 +54,7 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
                     AuthRepository.inst
                         .signInWithPassword(password)
                         .then(
-                          (value) => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage())),
+                          (value) => Navigator.pushReplacement(context, HomePage.route()),
                         )
                         .catchError((e) => Messages.showError(context, e));
                   } else {

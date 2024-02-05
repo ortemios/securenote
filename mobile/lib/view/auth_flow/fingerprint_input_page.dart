@@ -39,19 +39,13 @@ class _FingerprintInputPageState extends State<FingerprintInputPage> {
           ),
           MaterialButton(
             onPressed: () {
-              //if (logged) {
               //AuthRepository.inst.setFingerprintAuth().then((value) => ).
-                AuthRepository.inst
-                    .signInWithFingerprint()
-                    .then(
-                      (value) => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
-                      ),
-                    )
-                    .catchError((e) => Messages.showError(context, e));
+              AuthRepository.inst
+                  .signInWithFingerprint()
+                  .then(
+                    (value) => Navigator.pushReplacement(context, HomePage.route()),
+                  )
+                  .catchError((e) => Messages.showError(context, e));
               // } else {
               //   _toPhoneInput();
               // }
@@ -62,16 +56,4 @@ class _FingerprintInputPageState extends State<FingerprintInputPage> {
       ),
     );
   }
-
-  // Future<void> _toPhoneInput() {
-  //   return AuthRepository.inst
-  //       .setFingerprintAuth()
-  //       .then(
-  //         (value) => Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => const HomePage()),
-  //         ),
-  //       )
-  //       .catchError((e) => Messages.showError(context, e));
-  // }
 }

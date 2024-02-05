@@ -44,10 +44,7 @@ class _PasswordRepeatPageState extends State<PasswordRepeatPage> {
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
                   AuthRepository.inst.setPasswordAuth(widget.password).then((value) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
+                    Navigator.pushReplacement(context, HomePage.route());
                   }).catchError((e) => Messages.showError(context, e));
                 }
               },

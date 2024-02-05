@@ -14,8 +14,7 @@ class ProfilePage extends StatelessWidget {
       children: [
         MaterialButton(
           onPressed: () => AuthRepository.inst.logout().then(
-                (value) => Navigator.pushAndRemoveUntil(
-                  context,
+                (value) => Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const PhoneInputPage()),
                   (route) => false,
                 ),

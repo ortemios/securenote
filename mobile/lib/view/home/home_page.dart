@@ -4,14 +4,15 @@ import 'package:secure_note/view/home/notes/note_list_page.dart';
 import 'package:secure_note/view/home/profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  static MaterialPageRoute route() => MaterialPageRoute(builder: (_) => const HomePage());
+
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
   final _pageController = PageController();
 
   final _subtrees = <_Subtree>[
@@ -32,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     NoteRepository.inst.reloadNoteList();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,9 +69,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
 class _Subtree extends StatefulWidget {
-
   final String title;
   final IconData icon;
   final Widget initialRoute;
