@@ -7,7 +7,7 @@ class NotesApi extends Api {
   String? _token;
 
   @override
-  String get host => "http://localhost:1453/api";
+  String get host => "http://127.0.0.1:8000/api";
 
   void setToken(String? token) {
     _token = token;
@@ -23,7 +23,7 @@ class NotesApi extends Api {
   }) {
     final token = _token;
     if (token != null) {
-      headers['Authentication-Bearer'] = token;
+      headers['Authorization-Bearer'] = token;
     }
     return super.request(
       path: path,
