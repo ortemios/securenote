@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:secure_note/data/auth_repository.dart';
+import 'package:secure_note/data/auth/auth_repository.dart';
 import 'package:secure_note/view/auth_flow/password_repeat_page.dart';
 import 'package:secure_note/view/auth_flow/phone_input_page.dart';
 

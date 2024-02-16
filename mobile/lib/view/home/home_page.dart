@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:secure_note/data/note_repository.dart';
+import 'package:secure_note/data/notes/note_repository.dart';
 import 'package:secure_note/view/home/notes/note_list_page.dart';
 import 'package:secure_note/view/home/profile/profile_page.dart';
 

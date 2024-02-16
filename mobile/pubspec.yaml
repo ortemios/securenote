@@ -39,6 +39,7 @@ dependencies:
   local_auth: ^2.1.8
   rxdart: ^0.27.7
   flutter_secure_storage: ^9.0.0
+  http: ^1.1.2
 
 dev_dependencies:
   flutter_test:

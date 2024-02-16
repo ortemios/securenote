@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:secure_note/data/auth_repository.dart';
+import 'package:secure_note/data/auth/auth_repository.dart';
 import 'package:secure_note/view/auth_flow/auth_method_page.dart';
 import 'package:secure_note/view/auth_flow/fingerprint_input_page.dart';
 import 'package:secure_note/view/auth_flow/password_input_page.dart';
@@ -40,7 +40,13 @@ class _PinInputPageState extends State<PinInputPage> {
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
                     final pin = _textController.text;
-                    AuthRepository.inst.checkSms(pin).then((v) => AuthRepository.inst.getAuthMethod()).then((method) {
+                    AuthRepository.inst
+                        .checkSms(
+                          phone: widget.phone,
+                          pin: pin,
+                        )
+                        .then((v) => AuthRepository.inst.getAuthMethod())
+                        .then((method) {
                       final page = switch (method) {
                         AuthMethod.none => const AuthMethodPage(),
                         AuthMethod.password => const PasswordInputPage(),

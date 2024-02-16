@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:secure_note/data/note_repository.dart';
+import 'package:secure_note/data/notes/note_repository.dart';
 import 'package:secure_note/view/home/notes/note_edit_page.dart';
 
 import '../../../model/note_item.dart';

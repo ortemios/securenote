@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:secure_note/data/auth_repository.dart';
+import 'package:secure_note/data/auth/auth_repository.dart';
 import 'package:secure_note/view/home/home_page.dart';
 
 import '../../util/messages.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/auth_repository.dart';
+import '../../../data/auth/auth_repository.dart';
 import '../../auth_flow/phone_input_page.dart';
 
 class ProfilePage extends StatelessWidget {

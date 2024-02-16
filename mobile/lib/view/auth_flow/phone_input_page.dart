@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:secure_note/data/auth_repository.dart';
+import 'package:secure_note/data/auth/auth_repository.dart';
 import 'package:secure_note/util/messages.dart';
 import 'package:secure_note/util/validators.dart';
 import 'package:secure_note/view/auth_flow/pin_input_page.dart';

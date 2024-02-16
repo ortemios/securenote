@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:secure_note/data/auth_repository.dart';
+import 'package:secure_note/data/auth/auth_repository.dart';
 import 'package:secure_note/view/auth_flow/auth_method_page.dart';
 import 'package:secure_note/view/auth_flow/fingerprint_input_page.dart';
 import 'package:secure_note/view/auth_flow/password_input_page.dart';
@@ -24,7 +24,12 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    AuthRepository.inst.getAuthState().then((state) async {
+    AuthRepository.inst
+        .login()
+        .then(
+          (value) => AuthRepository.inst.getAuthState(),
+        )
+        .then((state) async {
       return switch (state) {
         AuthState.unauthorized => const PhoneInputPage(),
         _ => switch (await AuthRepository.inst.getAuthMethod()) {

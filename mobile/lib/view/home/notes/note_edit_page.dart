@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:secure_note/data/note_repository.dart';
+import 'package:secure_note/data/notes/note_repository.dart';
 
 class NoteEditPage extends StatefulWidget {
   final int? noteId;
@@ -88,10 +88,13 @@ class _NoteEditPageState extends State<NoteEditPage> {
         Icons.arrow_back_rounded,
         size: 20,
       ),
-      onPressed: () => Navigator.of(context).pop(),
+      onPressed: () {
+        _save();
+        Navigator.of(context).pop();
+      },
     );
   }
-  
+
   Widget get _title {
     return Padding(
       padding: const EdgeInsets.all(0.0),
@@ -143,7 +146,6 @@ class _NoteEditPageState extends State<NoteEditPage> {
             : Container();
   }
 
-
   void _onTextChanged(String? value) {
     setState(() {
       _isModified = true;
@@ -166,12 +168,9 @@ class _NoteEditPageState extends State<NoteEditPage> {
       } else {
         operation = NoteRepository.inst.createNote(title: title, content: content).then((id) => noteId = id);
       }
-      operation.whenComplete(
-            () =>
-            setState(() {
-              _isSaving = false;
-            }),
-      );
+      operation.whenComplete(() {
+        setState(() => _isSaving = false);
+      });
     }
   }
 }
