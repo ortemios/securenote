@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import backend.views.note as note
+from backend.views.notes import *
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", note.index, name="index"),
+    path("notes/", NotesView.as_view(), name='notes/'),
+    path("notes/<int:id>/", NotesDetailView.as_view(), name='notes/id'),
 ]
