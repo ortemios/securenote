@@ -21,6 +21,8 @@ class JsonNode {
 
   String optString(String key, {String def = ''}) => _optString(map[key], def);
 
+  T mapSelf<T>(T Function(JsonNode) mapper) => mapper(this);
+
   T mapObject<T>(String key, T Function(JsonNode) mapper) => mapper(JsonNode(optValue(key, <String, dynamic>{})));
 
   List<T> optList<T>(String key, T Function(dynamic) mapper) => optValue(key, List<dynamic>.empty()).map(mapper).toList();

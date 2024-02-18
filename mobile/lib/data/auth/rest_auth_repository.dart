@@ -19,10 +19,10 @@ class RestAuthRepository extends AuthRepository {
     final token = prefs.getString(_tokenKey);
     if (token != null) {
       NotesApi.inst.setToken(token);
-      await NotesApi.inst.authRefreshToken().then((resp) async {
-        NotesApi.inst.setToken(resp.token);
-        await prefs.setString(_tokenKey, token);
-      });
+      // await NotesApi.inst.authRefreshToken().then((resp) async {
+      //   NotesApi.inst.setToken(resp.token);
+      //   await prefs.setString(_tokenKey, token);
+      // });
     }
   }
 
@@ -67,6 +67,7 @@ class RestAuthRepository extends AuthRepository {
     required String pin,
   }) async {
     return NotesApi.inst.authLogin(phone: phone, pin: pin).then((value) async {
+      NotesApi.inst.setToken(value.token);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(_authStateKey, AuthState.phoneValidated.index);
       await prefs.setString(_tokenKey, value.token);
@@ -107,13 +108,11 @@ class RestAuthRepository extends AuthRepository {
 
   @override
   Future<void> logout() async {
-    return NotesApi.inst.authLogout().then((value) async {
-      final prefs = await SharedPreferences.getInstance();
-      NotesApi.inst.setToken(null);
-      await prefs.remove(_authStateKey);
-      await prefs.remove(_authMethodKey);
-      await prefs.remove(_passwordKey);
-      await prefs.remove(_tokenKey);
-    });
+    final prefs = await SharedPreferences.getInstance();
+    NotesApi.inst.setToken(null);
+    await prefs.remove(_authStateKey);
+    await prefs.remove(_authMethodKey);
+    await prefs.remove(_passwordKey);
+    await prefs.remove(_tokenKey);
   }
 }

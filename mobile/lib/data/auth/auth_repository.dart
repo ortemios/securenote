@@ -1,3 +1,5 @@
+import 'package:secure_note/data/auth/rest_auth_repository.dart';
+
 import 'local_auth_repository.dart';
 
 enum AuthState { unauthorized, phoneValidated, authorized }
@@ -29,5 +31,5 @@ abstract class AuthRepository {
 
   Future<void> logout();
 
-  static final inst = LocalAuthRepository();
+  static final inst = RestAuthRepository();
 }

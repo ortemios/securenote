@@ -4,36 +4,50 @@ import 'package:secure_note/api/notes_api/dto/note_dto_short.dart';
 import '../dto/note_dto_full.dart';
 
 extension NoteRequests on NotesApi {
-  Future<NoteGetAllResponse> noteGetAll() => get(
-        path: 'note/',
+  Future<NoteGetAllResponse> notesGetAll() => get(
+        path: 'notes/',
         params: {},
         mapper: (json) => NoteGetAllResponse(json),
       );
 
-  Future<NoteGetResponse> noteGet({required int id}) => get(
-        path: 'note/$id',
+  Future<NoteGetResponse> notesGet({required int id}) => get(
+        path: 'notes/$id/',
         params: {},
         mapper: (json) => NoteGetResponse(json),
       );
 
-  Future<NotePostResponse> notePost({
-    int? id,
+  Future<NotesItemResponse> notesPost({
     required String title,
     required String content,
   }) =>
       post(
-        path: 'note/$id',
+        path: 'notes/',
         params: {},
         body: {
-          if (id != null) 'id': id,
           'title': title,
           'content': content,
         },
-        mapper: (json) => NotePostResponse(json),
+        mapper: (json) => NotesItemResponse(json),
+      );
+
+  Future<NotesItemResponse> notesPatch({
+    required int id,
+    required String title,
+    required String content,
+  }) =>
+      patch(
+        path: 'notes/$id/',
+        params: {},
+        body: {
+          'id': id,
+          'title': title,
+          'content': content,
+        },
+        mapper: (json) => NotesItemResponse(json),
       );
 
   Future<NoteDeleteResponse> noteDelete({required int id}) => delete(
-        path: 'note/$id',
+        path: 'notes/$id/',
         params: {},
         mapper: (json) => NoteDeleteResponse(json),
       );
@@ -54,19 +68,17 @@ class NoteGetResponse extends ApiResponse {
   final NoteDTOFull item;
 
   NoteGetResponse(JsonNode json)
-      : item = json.mapObject(
-          "item",
+      : item = json.mapSelf(
           (json) => NoteDTOFull(json),
         ),
         super(json);
 }
 
-class NotePostResponse extends ApiResponse {
+class NotesItemResponse extends ApiResponse {
   final NoteDTOFull item;
 
-  NotePostResponse(JsonNode json)
-      : item = json.mapObject(
-          "item",
+  NotesItemResponse(JsonNode json)
+      : item = json.mapSelf(
           (json) => NoteDTOFull(json),
         ),
         super(json);

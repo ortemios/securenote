@@ -18,10 +18,12 @@ class RestNoteRepository extends NoteRepository {
   @override
   Future<int> createNote({required String title, required String content}) {
     return _withReload(
-      () => NotesApi.inst.notePost(
+      () => NotesApi.inst
+          .notesPost(
         title: title,
         content: content,
-      ).then(
+      )
+          .then(
         (resp) {
           reloadNoteList();
           return resp.item.id;
@@ -45,7 +47,7 @@ class RestNoteRepository extends NoteRepository {
 
   @override
   Future<NoteFull> getNote({required int id}) {
-    return NotesApi.inst.noteGet(id: id).then(
+    return NotesApi.inst.notesGet(id: id).then(
           (resp) => NoteFull(
             id: resp.item.id,
             title: resp.item.title,
@@ -59,13 +61,13 @@ class RestNoteRepository extends NoteRepository {
 
   @override
   Stream<bool> isReloadingNoteList() {
-    return _reloadTasksCount.map((c) => c == 0);
+    return _reloadTasksCount.map((c) => c > 0);
   }
 
   @override
   Future<void> reloadNoteList() {
     return _withReload(
-      () => NotesApi.inst.noteGetAll().then(
+      () => NotesApi.inst.notesGetAll().then(
         (resp) {
           _notes.add(
             resp.items
@@ -89,11 +91,13 @@ class RestNoteRepository extends NoteRepository {
     required String content,
   }) {
     return _withReload(
-      () => NotesApi.inst.notePost(
+      () => NotesApi.inst
+          .notesPatch(
         id: id,
         title: title,
         content: content,
-      ).then(
+      )
+          .then(
         (resp) {
           reloadNoteList();
         },

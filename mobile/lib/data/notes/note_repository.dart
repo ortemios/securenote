@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:secure_note/data/notes/rest_note_repository.dart';
 import 'package:secure_note/model/note_item.dart';
 
 import '../../model/note_full.dart';
@@ -27,5 +28,5 @@ abstract class NoteRepository {
     required String content,
   });
 
-  static final inst = LocalNoteRepository();
+  static final inst = RestNoteRepository();
 }

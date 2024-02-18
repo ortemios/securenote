@@ -16,11 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.routers import SimpleRouter
+
 from backend.views.notes import *
+from backend.views.auth import *
+
+
+router = SimpleRouter()
+router.register(prefix='notes', viewset=NotesView)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("notes/", NotesView.as_view(), name='notes/'),
-    path("notes/<int:id>/", NotesDetailView.as_view(), name='notes/id'),
-]
+    # path("notes/", NotesView.as_view(), name='notes/'),
+    # path("notes/<int:id>/", NotesDetailView.as_view(), name='notes/id'),
+
+    path("auth/send-sms", SendSMSView.as_view()),
+    path("auth/login", LoginView.as_view()),
+    path("auth/refresh-token", RefreshTokenView.as_view()),
+] + router.urls

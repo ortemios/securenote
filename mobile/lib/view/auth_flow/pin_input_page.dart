@@ -32,7 +32,7 @@ class _PinInputPageState extends State<PinInputPage> {
               controller: _textController,
               textAlign: TextAlign.center,
               enableSuggestions: false,
-              maxLength: 4,
+              maxLength: 6,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
             ),

@@ -17,7 +17,10 @@ abstract class Api {
       path: path,
       params: params,
       mapper: mapper,
-      request: http.get,
+      request: (uri, headers) => http.get(
+        uri,
+        headers: headers,
+      ),
     );
   }
 
@@ -31,10 +34,35 @@ abstract class Api {
       path: path,
       params: params,
       mapper: mapper,
-      request: (uri) => http.post(
-        uri,
-        body: jsonEncode(body),
-      ),
+      request: (uri, headers) {
+        debugPrint('Body: ${jsonEncode(body)}');
+        return http.post(
+          uri,
+          headers: headers,
+          body: jsonEncode(body),
+        );
+      },
+    );
+  }
+
+  Future<T> patch<T extends ApiResponse>({
+    required String path,
+    required Map<dynamic, dynamic> body,
+    required Map<String, String> params,
+    required T Function(JsonNode) mapper,
+  }) async {
+    return request(
+      path: path,
+      params: params,
+      mapper: mapper,
+      request: (uri, headers) {
+        debugPrint('Body: ${jsonEncode(body)}');
+        return http.patch(
+          uri,
+          headers: headers,
+          body: jsonEncode(body),
+        );
+      },
     );
   }
 
@@ -47,7 +75,10 @@ abstract class Api {
       path: path,
       params: params,
       mapper: mapper,
-      request: http.delete,
+      request: (uri, headers) => http.delete(
+        uri,
+        headers: headers,
+      ),
     );
   }
 
@@ -56,14 +87,16 @@ abstract class Api {
     Map<String, String> params = const {},
     Map<String, String> headers = const {},
     required T Function(JsonNode) mapper,
-    required Future<http.Response> Function(Uri uri) request,
+    required Future<http.Response> Function(Uri uri, Map<String, String> headers) request,
   }) async {
     try {
       final uri = Uri.parse(host + path).replace(queryParameters: params);
       debugPrint('Request URL: ${uri.toString()}');
-      final response = await request(uri);
+      final response = await request(uri, headers);
+      final body = response.body.isNotEmpty ? response.body : '{}';
+      debugPrint('Response: $body');
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final json = JsonNode(jsonDecode(response.body));
+        final json = JsonNode(jsonDecode(body));
         final resp = mapper(json);
         if (resp.error == 0 && resp.status == 0) {
           return resp;

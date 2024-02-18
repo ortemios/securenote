@@ -38,16 +38,18 @@ class _MyAppState extends State<MyApp> {
             AuthMethod.fingerprint => const FingerprintInputPage(),
           }
       };
-    }).then((page) {
-      final context = _navigatorKey.currentContext;
-      if (context != null) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => page),
-          (route) => false,
-        );
-      }
-    });
+    }).then(
+      (page) {
+        final context = _navigatorKey.currentContext;
+        if (context != null) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => page),
+            (route) => false,
+          );
+        }
+      },
+    );
   }
 
   @override
