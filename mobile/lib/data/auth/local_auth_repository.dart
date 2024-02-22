@@ -46,8 +46,9 @@ class LocalAuthRepository extends AuthRepository {
   final String _token = "123";
 
   @override
-  sendSms(String phone) async {
+  Future<int> sendSms(String phone) async {
     _pin = "1234";
+    return 10;
   }
 
   @override

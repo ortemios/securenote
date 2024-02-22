@@ -20,38 +20,39 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Введите номер телефона (10 цифр без +7)"),
-              TextFormField(
-                controller: _textController,
-                textAlign: TextAlign.center,
-                enableSuggestions: false,
-                validator: Validators.phone,
-                keyboardType: TextInputType.phone,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-              ),
-              MaterialButton(
-                  onPressed: () {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      final phone = _textController.text;
-                      AuthRepository.inst.sendSms(phone).then((value) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => PinInputPage(phone))
-                        );
-                      }).catchError((e) => Messages.showError(context, e));
-                    }
-                  },
-                  child: const Text("Далее")
-              )
-            ],
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Введите номер телефона (10 цифр без +7)"),
+          TextFormField(
+            controller: _textController,
+            textAlign: TextAlign.center,
+            enableSuggestions: false,
+            validator: Validators.phone,
+            keyboardType: TextInputType.phone,
+            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
           ),
-        )
-    );
+          MaterialButton(
+              onPressed: () {
+                if (_formKey.currentState?.validate() ?? false) {
+                  final phone = _textController.text;
+                  AuthRepository.inst.sendSms(phone).then((resendTime) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PinInputPage(
+                          phone: phone,
+                          resendTime: resendTime,
+                        ),
+                      ),
+                    );
+                  }).catchError((e) => Messages.showError(context, e));
+                }
+              },
+              child: const Text("Далее"))
+        ],
+      ),
+    ));
   }
 }

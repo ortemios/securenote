@@ -10,7 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import datetime
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+from os.path import join, dirname
+
+from rest_framework.throttling import AnonRateThrottle
+
+load_dotenv(join(dirname(__file__), '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,6 +132,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# class SmsRateThrottle(AnonRateThrottle):
+#     cache = caches['sms']
+
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'backend.auth_backend.JwtAuthBackend',
@@ -131,6 +144,13 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'backend.User'
-TOKEN_VALID_SECONDS = 9999999
-TOKEN_REFRESH_VALID_SECONDS = 120
-SMS_CODE_VALID_SECONDS = 15
+TOKEN_VALID_SECONDS = 5*60
+SMS_CODE_VALID_SECONDS = 60
+
+SMSAERO_API_KEY = os.environ['SMSAERO_API_KEY']
+SMSAERO_EMAIL = os.environ['SMSAERO_EMAIL']
+SMSAERO_SIGN = os.environ['SMSAERO_SIGN']
+
+
+AUTH_TOKEN_PRIVATE_KEY = os.environ['AUTH_TOKEN_PRIVATE_KEY']
+AUTH_TOKEN_PUBLIC_KEY = os.environ['AUTH_TOKEN_PUBLIC_KEY']

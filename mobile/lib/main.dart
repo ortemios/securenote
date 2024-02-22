@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:secure_note/data/auth/auth_repository.dart';
+import 'package:secure_note/util/messages.dart';
 import 'package:secure_note/view/auth_flow/auth_method_page.dart';
 import 'package:secure_note/view/auth_flow/fingerprint_input_page.dart';
 import 'package:secure_note/view/auth_flow/password_input_page.dart';
@@ -19,17 +22,35 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+  late Timer _tokenRefreshTimer;
 
   @override
   void initState() {
     super.initState();
+    _tokenRefreshTimer = Timer.periodic(const Duration(minutes: 1), (_) {
+      AuthRepository.inst.login();
+    });
+    _login();
+  }
 
-    AuthRepository.inst
-        .login()
-        .then(
-          (value) => AuthRepository.inst.getAuthState(),
-        )
-        .then((state) async {
+  @override
+  void dispose() {
+    _tokenRefreshTimer.cancel();
+    super.dispose();
+  }
+
+  void _login() {
+    AuthRepository.inst.login().then(
+      (value) => AuthRepository.inst.getAuthState(),
+      onError: (e, _) {
+        return AuthState.unauthorized;
+        // Messages.showErrorAlert(
+        //   _navigatorKey.currentContext!,
+        //   onRetry: _login,
+        // );
+        // throw e;
+      },
+    ).then((state) async {
       return switch (state) {
         AuthState.unauthorized => const PhoneInputPage(),
         _ => switch (await AuthRepository.inst.getAuthMethod()) {

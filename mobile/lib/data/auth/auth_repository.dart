@@ -12,7 +12,7 @@ abstract class AuthRepository {
 
   Future<AuthMethod> getAuthMethod();
 
-  Future<void> sendSms(String phone);
+  Future<int> sendSms(String phone);
 
   Future<void> checkSms({
     required String phone,

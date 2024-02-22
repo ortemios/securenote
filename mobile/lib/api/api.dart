@@ -95,16 +95,12 @@ abstract class Api {
       final response = await request(uri, headers);
       final body = response.body.isNotEmpty ? response.body : '{}';
       debugPrint('Response: $body');
+      final json = JsonNode(jsonDecode(body));
+      final resp = mapper(json);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final json = JsonNode(jsonDecode(body));
-        final resp = mapper(json);
-        if (resp.error == 0 && resp.status == 0) {
-          return resp;
-        } else {
-          throw resp;
-        }
+        return resp;
       } else {
-        throw response;
+        throw resp;
       }
     } catch (e) {
       debugPrint(e.toString());

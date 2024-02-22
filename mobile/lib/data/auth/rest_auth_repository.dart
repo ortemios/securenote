@@ -19,10 +19,10 @@ class RestAuthRepository extends AuthRepository {
     final token = prefs.getString(_tokenKey);
     if (token != null) {
       NotesApi.inst.setToken(token);
-      // await NotesApi.inst.authRefreshToken().then((resp) async {
-      //   NotesApi.inst.setToken(resp.token);
-      //   await prefs.setString(_tokenKey, token);
-      // });
+      await NotesApi.inst.authRefreshToken().then((resp) async {
+        NotesApi.inst.setToken(resp.token);
+        await prefs.setString(_tokenKey, token);
+      });
     }
   }
 
@@ -57,8 +57,16 @@ class RestAuthRepository extends AuthRepository {
   }
 
   @override
-  Future<void> sendSms(String phone) async {
-    return NotesApi.inst.authSendSms(phone: phone).then((value) => null);
+  Future<int> sendSms(String phone) async {
+    return NotesApi.inst.authSendSms(phone: phone).then(
+      (value) => value.resendAt,
+      onError: (e, _) {
+        if (e is AuthSendSmsResponse) {
+          if (e.resendAt != 0) return e.resendAt;
+        }
+        throw e!;
+      },
+    );
   }
 
   @override

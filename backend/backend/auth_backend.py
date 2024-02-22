@@ -10,6 +10,7 @@ from django.http import HttpRequest
 from rest_framework.exceptions import AuthenticationFailed
 
 from backend.models import User
+from backend.service import token_manager
 
 
 class JwtAuthBackend(BaseBackend):
@@ -21,17 +22,17 @@ class JwtAuthBackend(BaseBackend):
         header = request.headers.get('Authorization')
         if not header:
             return
-        tokens = header.split()
-        if len(tokens) != 2 or tokens[0] != 'Bearer':
+        tokens = header.split('Bearer ')
+        if len(tokens) != 2:
             raise AuthenticationFailed('Invalid token format')
-
-        token = base64.b64decode(tokens[1]).decode()
-        payload: dict = json.loads(token)
+        payload: dict = token_manager.read_payload(tokens[1])
+        if payload is None:
+            raise AuthenticationFailed('Invalid token')
         phone: str = payload.get('phone', '')
         valid_until: int = payload.get('valid_until', 0)
 
         if datetime.utcnow().timestamp() > valid_until:
-            raise AuthenticationFailed('Token expired')
+            return
 
         try:
             user = User.objects.get(phone=phone)

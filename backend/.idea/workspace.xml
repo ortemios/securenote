@@ -5,23 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa02110f-4a90-46f9-9835-c75fe2c8f934" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/service/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/service/sms_sender.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/service/token_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/70541bb1-1bbd-4482-9b5e-68f243ed4d06.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/70541bb1-1bbd-4482-9b5e-68f243ed4d06.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/auth_backend.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/auth_backend.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/notes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/notes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/api/notes_api/notes_api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/api/notes_api/notes_api.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/api/notes_api/requests/note.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/api/notes_api/requests/notes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/data/notes/rest_note_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/data/notes/rest_note_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/api/api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/api/api.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/api/notes_api/requests/auth.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/api/notes_api/requests/auth.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/data/auth/auth_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/data/auth/auth_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/data/auth/local_auth_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/data/auth/local_auth_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/data/auth/rest_auth_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/data/auth/rest_auth_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/util/messages.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/util/messages.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/view/auth_flow/phone_input_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/view/auth_flow/phone_input_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/view/auth_flow/pin_input_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/view/auth_flow/pin_input_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -41,24 +52,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -99,11 +111,37 @@
       <workItem from="1707159300775" duration="2011000" />
       <workItem from="1708091947734" duration="229000" />
       <workItem from="1708092185665" duration="3000" />
-      <workItem from="1708277718020" duration="16261000" />
+      <workItem from="1708277718020" duration="16972000" />
+      <workItem from="1708540485271" duration="18311000" />
+      <workItem from="1708590763644" duration="9182000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/backend/views/auth.py</url>
+          <line>89</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/backend/views/auth.py</url>
+          <line>87</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/backend$token_manager.coverage" NAME="token_manager Coverage Results" MODIFIED="1708560797762" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend/service" />
+    <SUITE FILE_PATH="coverage/backend$sms_sender.coverage" NAME="sms_sender Coverage Results" MODIFIED="1708554372944" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend/service" />
+    <SUITE FILE_PATH="coverage/backend$settings.coverage" NAME="settings Coverage Results" MODIFIED="1708554399886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
   </component>
 </project>

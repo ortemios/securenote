@@ -40,7 +40,11 @@ extension AuthRequests on NotesApi {
 }
 
 class AuthSendSmsResponse extends ApiResponse {
-  AuthSendSmsResponse(JsonNode json) : super(json);
+  final int resendAt;
+
+  AuthSendSmsResponse(JsonNode json)
+      : resendAt = json.optInt('resend_at'),
+        super(json);
 }
 
 class AuthLoginResponse extends ApiResponse {
