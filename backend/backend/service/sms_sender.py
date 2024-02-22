@@ -11,6 +11,6 @@ def send_sms(phone: str, text: str):
         f'text={text}&'
         f'sign={settings.SMSAERO_SIGN}'
     )
-    #resp = requests.get(url)
-    #data = json.loads(resp.content)
-    #print('Response:', data)
+    resp = requests.get(url)
+    data = json.loads(resp.content)
+    print('Response:', data)
